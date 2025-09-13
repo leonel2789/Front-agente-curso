@@ -8,11 +8,11 @@ RUN echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf && \
     apk add --no-cache curl && \
     npm install -g @expo/cli
 
-# Copiar archivos de package
-COPY package*.json ./
+# Copiar solo package.json (no lock file para regenerarlo)
+COPY package.json ./
 
 # Instalar dependencias con optimizaciones
-RUN npm ci --production=false && \
+RUN npm install && \
     npm cache clean --force
 
 # Copiar código fuente
