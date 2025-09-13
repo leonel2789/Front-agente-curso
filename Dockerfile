@@ -34,4 +34,4 @@ ENV WATCHPACK_POLLING=true
 EXPOSE 3005
 
 # Comando para iniciar la aplicación web con configuración optimizada
-CMD ["npx", "expo", "start", "--web", "--port", "3005", "--host", "0.0.0.0"]
+CMD ["npx", "expo", "start", "--web", "--port", "3005", "--host", "lan"]
