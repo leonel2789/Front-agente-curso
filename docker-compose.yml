@@ -18,7 +18,6 @@ services:
       - EXPO_PUBLIC_N8N_SOPORTE_URL=https://agente.nilosolutions.com/webhook/support
       - EXPO_PUBLIC_N8N_MARKETING_URL=https://agente.nilosolutions.com/webhook/marketing
       - EXPO_PUBLIC_N8N_GENERAL_URL=https://agente.nilosolutions.com/webhook/general
-      - EXPO_PUBLIC_APP_URL=https://agente.nilosolutions.com
     volumes:
       - ./assets:/app/assets:ro
     networks:

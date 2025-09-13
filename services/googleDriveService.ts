@@ -20,23 +20,33 @@ interface UploadFileParams {
 
 class GoogleDriveService {
   private accessToken: string | null = null;
+  private initialized: boolean = false;
 
   constructor() {
-    this.initializeAuth();
+    // No inicializar durante el build estático
   }
 
   private async initializeAuth() {
+    if (this.initialized) return;
+
     try {
-      const accessToken = await AsyncStorage.getItem('google_drive_token');
-      if (accessToken) {
-        this.accessToken = accessToken;
+      // Solo inicializar si estamos en un entorno con window/AsyncStorage disponible
+      if (typeof window !== 'undefined' || Platform.OS !== 'web') {
+        const accessToken = await AsyncStorage.getItem('google_drive_token');
+        if (accessToken) {
+          this.accessToken = accessToken;
+        }
       }
+      this.initialized = true;
     } catch (error) {
       console.error('Error initializing Google Drive auth:', error);
+      this.initialized = true; // Marcar como inicializado para evitar intentos repetidos
     }
   }
 
   async authenticate(): Promise<boolean> {
+    await this.initializeAuth();
+
     try {
       // Configuración del discovery document para Google
       const discovery = {
@@ -114,8 +124,15 @@ class GoogleDriveService {
   }
 
   async isAuthenticated(): Promise<boolean> {
-    const token = await AsyncStorage.getItem('google_drive_token');
-    return !!token && !!this.accessToken;
+    await this.initializeAuth();
+
+    // Verificar en AsyncStorage solo si está disponible
+    if (typeof window !== 'undefined' || Platform.OS !== 'web') {
+      const token = await AsyncStorage.getItem('google_drive_token');
+      return !!token && !!this.accessToken;
+    }
+
+    return !!this.accessToken;
   }
 
   private async refreshToken(): Promise<boolean> {
@@ -256,6 +273,8 @@ class GoogleDriveService {
   }
 
   async uploadFile({ fileUri, fileName, mimeType, agentRole }: UploadFileParams): Promise<boolean> {
+    await this.initializeAuth();
+
     if (!this.accessToken) {
       const authSuccess = await this.authenticate();
       if (!authSuccess) {
@@ -391,8 +410,13 @@ class GoogleDriveService {
   }
 
   async logout(): Promise<void> {
+    await this.initializeAuth();
+
     try {
-      await AsyncStorage.multiRemove(['google_drive_token', 'google_drive_refresh_token']);
+      // Solo intentar limpiar AsyncStorage si está disponible
+      if (typeof window !== 'undefined' || Platform.OS !== 'web') {
+        await AsyncStorage.multiRemove(['google_drive_token', 'google_drive_refresh_token']);
+      }
       this.accessToken = null;
     } catch (error) {
       console.error('Error logging out from Google Drive:', error);
