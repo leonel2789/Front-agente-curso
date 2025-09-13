@@ -74,9 +74,9 @@ export interface ChatMessage {
 
 // Configuración de Google Drive
 export const GOOGLE_DRIVE_CONFIG = {
-  apiKey: 'AIzaSyBjqANTRL8W-fwUpn2vi-3RlKDsVr74-_A',
-  clientId: '1064025780018-i6v5f61sp2m5q0qhfn6493vnqo87pdnk.apps.googleusercontent.com',
-  clientSecret: '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',
+  apiKey: process.env.EXPO_PUBLIC_GOOGLE_API_KEY,
+  clientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
+  clientSecret: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_SECRET,
   scopes: [
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.readonly'
@@ -88,7 +88,7 @@ export const GOOGLE_DRIVE_FOLDERS = {
   'agente-ventas': process.env.EXPO_PUBLIC_GD_VENTAS_FOLDER_ID || 'your-folder-id',
   'agente-soporte': process.env.EXPO_PUBLIC_GD_SOPORTE_FOLDER_ID || 'your-folder-id', 
   'agente-marketing': process.env.EXPO_PUBLIC_GD_MARKETING_FOLDER_ID || 'your-folder-id',
-  'agente-general': '1wWEGO_9wSXKQux7cJXb4C9WVx2tIXAgi'
+  'agente-general': process.env.EXPO_PUBLIC_GD_GENERAL_FOLDER_ID || 'your-folder-id'
 } as const;
 
 // Subfolder names for "no procesados"
