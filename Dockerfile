@@ -31,6 +31,5 @@ RUN npx expo export --platform web --output-dir dist
 # Exponer puerto
 EXPOSE 3005
 
-# Usar dumb-init y servir archivos estáticos
-ENTRYPOINT ["dumb-init", "--"]
-CMD ["serve", "-s", "dist", "-l", "3005"]
+# Servir archivos estáticos en todas las interfaces (0.0.0.0)
+CMD ["npx", "serve", "-s", "dist", "-l", "tcp://0.0.0.0:3005", "--single"]
