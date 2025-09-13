@@ -1,5 +1,5 @@
 # Dockerfile (versión simple)
-FROM node:22-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar dependencias
-RUN npm install
+RUN npm ci
 
 # Copiar código fuente
 COPY . .
@@ -15,14 +15,8 @@ COPY . .
 # Instalar Expo CLI globalmente
 RUN npm install -g @expo/cli
 
-# Variables de entorno específicas para contenedor
-ENV NODE_ENV=production
-ENV EXPO_CLI_DISABLE_UPDATE_CHECK=1
-ENV EXPO_NO_TELEMETRY=1
-ENV CHOKIDAR_USEPOLLING=false
-
 # Exponer puerto
-EXPOSE 3005
+EXPOSE 3000
 
-# Comando simple para iniciar la aplicación web
-CMD ["npx", "expo", "start", "--web", "--port", "3005", "--non-interactive"]
+# Comando para iniciar la aplicación web
+CMD ["npx", "expo", "start", "--web", "--port", "3000"]
