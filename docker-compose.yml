@@ -10,21 +10,25 @@ services:
       - "3005:3005"
     environment:
       - NODE_ENV=production
+      - CHOKIDAR_USEPOLLING=false
+      - WATCHPACK_POLLING=false
+      - EXPO_CLI_DISABLE_UPDATE_CHECK=1
       - EXPO_PUBLIC_KEYCLOAK_URL=https://keycloak.nilosolutions.com
       - EXPO_PUBLIC_KEYCLOAK_REALM=n8n-course
       - EXPO_PUBLIC_KEYCLOAK_CLIENT_ID=course-client
       - EXPO_PUBLIC_KEYCLOAK_CLIENT_SECRET=course-secret-2024
-      - EXPO_PUBLIC_N8N_VENTAS_URL=https://agente.nilosolutions.com/webhook/sales
-      - EXPO_PUBLIC_N8N_SOPORTE_URL=https://agente.nilosolutions.com/webhook/support
-      - EXPO_PUBLIC_N8N_MARKETING_URL=https://agente.nilosolutions.com/webhook/marketing
-      - EXPO_PUBLIC_N8N_GENERAL_URL=https://agente.nilosolutions.com/webhook/general
+      - EXPO_PUBLIC_N8N_VENTAS_URL=https://agentefront.nilosolutions.com/webhook/sales
+      - EXPO_PUBLIC_N8N_SOPORTE_URL=https://agentefront.nilosolutions.com/webhook/support
+      - EXPO_PUBLIC_N8N_MARKETING_URL=https://agentefront.nilosolutions.com/webhook/marketing
+      - EXPO_PUBLIC_N8N_GENERAL_URL=https://agentefront.nilosolutions.com/webhook/general
+      - EXPO_PUBLIC_APP_URL=https://agentefront.nilosolutions.com
     volumes:
       - ./assets:/app/assets:ro
     networks:
       - n8n-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://0.0.0.0:3005"]
+      test: ["CMD", "curl", "-f", "http://localhost:3005"]
       interval: 30s
       timeout: 10s
       retries: 3
