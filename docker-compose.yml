@@ -8,11 +8,11 @@ services:
     container_name: n8n-agente-frontend
     ports:
       - "3005:3005"
-    privileged: true
     environment:
       - NODE_ENV=production
-      - CHOKIDAR_USEPOLLING=false
-      - WATCHPACK_POLLING=false
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=2000
+      - WATCHPACK_POLLING=true
       - EXPO_CLI_DISABLE_UPDATE_CHECK=1
       - EXPO_PUBLIC_KEYCLOAK_URL=https://keycloak.nilosolutions.com
       - EXPO_PUBLIC_KEYCLOAK_REALM=n8n-course

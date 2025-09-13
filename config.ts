@@ -74,9 +74,9 @@ export interface ChatMessage {
 
 // Configuración de Google Drive
 export const GOOGLE_DRIVE_CONFIG = {
-  apiKey: process.env.EXPO_PUBLIC_GOOGLE_API_KEY,
-  clientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
-  clientSecret: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_SECRET,
+  apiKey: 'AIzaSyBjqANTRL8W-fwUpn2vi-3RlKDsVr74-_A',
+  clientId: '1064025780018-i6v5f61sp2m5q0qhfn6493vnqo87pdnk.apps.googleusercontent.com',
+  clientSecret: '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',
   scopes: [
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.readonly'
