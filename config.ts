@@ -88,7 +88,7 @@ export const GOOGLE_DRIVE_FOLDERS = {
   'agente-ventas': process.env.EXPO_PUBLIC_GD_VENTAS_FOLDER_ID || 'your-folder-id',
   'agente-soporte': process.env.EXPO_PUBLIC_GD_SOPORTE_FOLDER_ID || 'your-folder-id', 
   'agente-marketing': process.env.EXPO_PUBLIC_GD_MARKETING_FOLDER_ID || 'your-folder-id',
-  'agente-general': process.env.EXPO_PUBLIC_GD_GENERAL_FOLDER_ID || 'your-folder-id'
+  'agente-general': '1wWEGO_9wSXKQux7cJXb4C9WVx2tIXAgi'
 } as const;
 
 // Subfolder names for "no procesados"

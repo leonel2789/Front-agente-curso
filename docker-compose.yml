@@ -8,6 +8,7 @@ services:
     container_name: n8n-agente-frontend
     ports:
       - "3005:3005"
+    privileged: true
     environment:
       - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=false
