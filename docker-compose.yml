@@ -1,19 +1,36 @@
 version: '3.8'
 
 services:
-  frontend:
+  n8n-agente-frontend:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: n8n-agente-frontend
     ports:
-      - "3000:3000"
+      - "3005:3005"
     environment:
       - NODE_ENV=production
-      - EXPO_PUBLIC_N8N_URL=${N8N_URL:-http://n8n-ywskksw80g88gkg4g4kkog0g.178.18.253.253.sslip.io/webhook/66c6b4ae-eae4-411c-ad4f-64a359ec245f}
-    restart: unless-stopped
+      - EXPO_PUBLIC_KEYCLOAK_URL=https://keycloak.nilosolutions.com
+      - EXPO_PUBLIC_KEYCLOAK_REALM=n8n-course
+      - EXPO_PUBLIC_KEYCLOAK_CLIENT_ID=course-client
+      - EXPO_PUBLIC_KEYCLOAK_CLIENT_SECRET=course-secret-2024
+      - EXPO_PUBLIC_N8N_VENTAS_URL=https://agente.nilosolutions.com/webhook/sales
+      - EXPO_PUBLIC_N8N_SOPORTE_URL=https://agente.nilosolutions.com/webhook/support
+      - EXPO_PUBLIC_N8N_MARKETING_URL=https://agente.nilosolutions.com/webhook/marketing
+      - EXPO_PUBLIC_N8N_GENERAL_URL=https://agente.nilosolutions.com/webhook/general
+      - EXPO_PUBLIC_APP_URL=https://agente.nilosolutions.com
+    volumes:
+      - ./assets:/app/assets:ro
     networks:
-      - app-network
+      - n8n-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3005"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 networks:
-  app-network:
+  n8n-network:
     driver: bridge
