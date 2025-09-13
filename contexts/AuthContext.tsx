@@ -33,9 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const redirectUri = AuthSession.makeRedirectUri({
-    useProxy: false,
-    preferLocalhost: true,
-    scheme: 'n8ncourse'
+    useProxy: true,
   });
 
   const keycloakAuthUrl = `${KEYCLOAK_CONFIG.url}/realms/${KEYCLOAK_CONFIG.realm}/protocol/openid-connect/auth`;
