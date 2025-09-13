@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<any | null>(null);
   const [userRoles, setUserRoles] = useState<UserRole[]>([]);
-  const [currentWebhookUrl, setCurrentWebhookUrl] = useState<string>(N8N_WEBHOOKS['ia-general']);
+  const [currentWebhookUrl, setCurrentWebhookUrl] = useState<string>(N8N_WEBHOOKS['agente-general']);
   const [loading, setLoading] = useState(true);
 
   const redirectUri = AuthSession.makeRedirectUri({
@@ -89,7 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return validRoles;
     } catch (error) {
       console.error('Error extracting roles from token:', error);
-      return ['ia-general']; // Rol por defecto si hay error
+      return ['agente-general']; // Rol por defecto si hay error
     }
   };
 
@@ -104,10 +104,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     
     // Si no se especifica rol o no existe, usar el primer rol del usuario
     if (userRoles.length > 0) {
-      return N8N_WEBHOOKS[userRoles[0]] || N8N_WEBHOOKS['ia-general'];
+      return N8N_WEBHOOKS[userRoles[0]] || N8N_WEBHOOKS['agente-general'];
     }
     
-    return N8N_WEBHOOKS['ia-general'];
+    return N8N_WEBHOOKS['agente-general'];
   };
 
   const initializeAuth = async () => {
@@ -235,7 +235,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await AsyncStorage.multiRemove(['access_token', 'refresh_token', 'user_info']);
       setUser(null);
       setUserRoles([]);
-      setCurrentWebhookUrl(N8N_WEBHOOKS['ia-general']);
+      setCurrentWebhookUrl(N8N_WEBHOOKS['agente-general']);
       setIsAuthenticated(false);
     } catch (error) {
       console.error('Logout error:', error);

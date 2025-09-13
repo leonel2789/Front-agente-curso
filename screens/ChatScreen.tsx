@@ -10,6 +10,7 @@ import {
   Animated,
   TouchableOpacity,
   Modal,
+  Image,
 } from 'react-native'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import ChatInput from '../components/ChatInput'
@@ -19,6 +20,10 @@ import FileUploader from '../components/FileUploader'
 import { N8N_URL, ChatMessage, AI_AGENTS } from '../config'
 import { useSession } from '../contexts/SessionContext'
 import { useAuth } from '../contexts/AuthContext'
+
+// Import logos
+const rosentalLogo = require('../assets/images/rosental.jpg')
+const enesimalLogo = require('../assets/images/enesimal.jpg')
 
 type Message = { id: string; text: string; isUser: boolean; isLoading?: boolean }
 
@@ -51,8 +56,16 @@ export default function ChatScreen() {
 
   // Obtener información del agente actual
   const getCurrentAgent = () => {
-    const currentRole = userRoles[0] || 'ia-general'
-    return AI_AGENTS[currentRole]
+    const currentRole = userRoles[0] || 'agente-general'
+    const agent = AI_AGENTS[currentRole]
+    
+    // Fallback si no se encuentra el agente
+    if (!agent) {
+      console.warn(`No se encontró configuración para el rol: ${currentRole}`)
+      return AI_AGENTS['agente-general']
+    }
+    
+    return agent
   }
 
   const currentAgent = getCurrentAgent()
@@ -202,11 +215,7 @@ export default function ChatScreen() {
             <TouchableOpacity onPress={() => setSidebarOpen(false)} style={styles.menuToggle}>
               <MaterialIcons name="chevron-left" size={28} color="#444" />
             </TouchableOpacity>
-            {/* Placeholder para Logo Principal */}
-            <View style={styles.logoPlaceholder}>
-              <Text style={styles.logoText}>LOGO</Text>
-            </View>
-            <Text style={styles.sidebarTitle}>N8N Course</Text>
+            <Text style={styles.sidebarTitle}>N8N Agente</Text>
           </View>
           {MENU_ITEMS.map(item => (
             <TouchableOpacity 
@@ -248,6 +257,12 @@ export default function ChatScreen() {
               </Text>
             </View>
           )}
+
+          {/* Logos en el Footer */}
+          <View style={styles.footerLogosContainer}>
+            <Image source={rosentalLogo} style={styles.footerRosentalLogo} resizeMode="contain" />
+            <Image source={enesimalLogo} style={styles.footerLogoImage} resizeMode="contain" />
+          </View>
         </>
       ) : (
         <TouchableOpacity onPress={() => setSidebarOpen(true)} style={styles.menuToggleClosed}>
@@ -313,15 +328,11 @@ export default function ChatScreen() {
               <View style={styles.emptyState}>
                 <MaterialCommunityIcons name={currentAgent.icon} size={64} color={currentAgent.color} />
                 <Text style={[styles.emptyText, { color: currentAgent.color }]}>
-                  {currentSessionId ? `Chatea con tu ${currentAgent.shortName}` : `Inicia una conversación con ${currentAgent.name}`}
+                  {currentSessionId ? `Agente General` : `Inicia una conversación con ${currentAgent.name}`}
                 </Text>
                 <Text style={styles.emptySubtext}>
                   {currentAgent.description}
                 </Text>
-                {/* Placeholder para Logo Secundario */}
-                <View style={styles.secondaryLogoPlaceholder}>
-                  <Text style={styles.secondaryLogoText}>Empresa 2 Logo</Text>
-                </View>
               </View>
             )}
           />
@@ -557,13 +568,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   // Estilos para placeholders de logos
-  logoPlaceholder: {
-    width: 20,
-    height: 20,
-    backgroundColor: '#ddd',
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
+  logoImage: {
+    width: 32,
+    height: 100,
     marginRight: 8,
   },
   logoText: {
@@ -585,5 +592,21 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
     fontWeight: '500',
+  },
+  footerLogosContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 16,
+    right: 16,
+    alignItems: 'center',
+  },
+  footerRosentalLogo: {
+    width: 120,
+    height: 100,
+    marginBottom: 8,
+  },
+  footerLogoImage: {
+    width: 300,
+    height: 70,
   },
 })

@@ -38,8 +38,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ visible, onClose }) => {
   const [uploadComplete, setUploadComplete] = useState(false);
   const [uploadResults, setUploadResults] = useState<{successful: number, total: number}>({successful: 0, total: 0});
 
-  const currentRole = userRoles[0] || 'ia-general';
-  const agentInfo = AI_AGENTS[currentRole];
+  const currentRole = userRoles[0] || 'agente-general';
+  const agentInfo = AI_AGENTS[currentRole] || AI_AGENTS['agente-general'];
 
   useEffect(() => {
     if (visible) {

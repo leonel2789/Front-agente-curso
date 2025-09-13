@@ -12,6 +12,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useAuth } from '../contexts/AuthContext';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
+// Import logo
+const rosentalLogo = require('../assets/images/rosental.jpg')
+
 const { width, height } = Dimensions.get('window');
 
 export default function LoginScreen() {
@@ -33,12 +36,9 @@ export default function LoginScreen() {
       >
         <View style={styles.content}>
           <View style={styles.logoContainer}>
-            {/* Placeholder para Logo de Empresa Principal */}
-            <View style={styles.logoPlaceholder}>
-              <Text style={styles.logoText}>LOGO</Text>
-              <Text style={styles.logoSubtext}>Empresa 1</Text>
-            </View>
-            <Text style={styles.appName}>N8N Course Platform</Text>
+            {/* Logo Rosental */}
+            <Image source={rosentalLogo} style={styles.logoImage} resizeMode="contain" />
+            <Text style={styles.appName}>N8N Agente</Text>
             <Text style={styles.appDescription}>
               Plataforma de aprendizaje con IA
             </Text>
@@ -62,13 +62,6 @@ export default function LoginScreen() {
           </View>
 
           <View style={styles.footer}>
-            {/* Placeholder para Logo de Empresa Secundaria */}
-            <View style={styles.secondaryLogoContainer}>
-              <Text style={styles.secondaryLogoText}>EMPRESA 2</Text>
-            </View>
-            <Text style={styles.footerText}>
-              Powered by N8N & Keycloak
-            </Text>
           </View>
         </View>
       </LinearGradient>
@@ -93,16 +86,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: height * 0.1,
   },
-  logoPlaceholder: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
+  logoImage: {
+    width: 120,
+    height: 120,
     marginBottom: 20,
-    borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    padding: 8,
   },
   logoText: {
     fontSize: 24,
