@@ -32,13 +32,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentWebhookUrl, setCurrentWebhookUrl] = useState<string>(N8N_WEBHOOKS['agente-general']);
   const [loading, setLoading] = useState(true);
 
-  const redirectUri = process.env.EXPO_PUBLIC_ENVIRONMENT === 'production'
-    ? 'https://agentefront.nilosolutions.com'
-    : AuthSession.makeRedirectUri({
-        useProxy: false,
-        preferLocalhost: true,
-        scheme: 'n8ncourse'
-      });
+  const redirectUri = AuthSession.makeRedirectUri({
+    useProxy: false,
+    preferLocalhost: true,
+    scheme: 'n8ncourse'
+  });
 
   const keycloakAuthUrl = `${KEYCLOAK_CONFIG.url}/realms/${KEYCLOAK_CONFIG.realm}/protocol/openid-connect/auth`;
   const keycloakTokenUrl = `${KEYCLOAK_CONFIG.url}/realms/${KEYCLOAK_CONFIG.realm}/protocol/openid-connect/token`;
